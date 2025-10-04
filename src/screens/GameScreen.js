@@ -468,7 +468,7 @@ const GameScreen = ({ onGameOver }) => {
 
     return (
       <SafeAreaView style={[styles.container, styles.centered]}>
-        <Animated.View style={{ transform: [{ scale }], opacity, alignItems: 'center' }}>
+        <Animated.View style={[styles.countdownContainer, { transform: [{ scale }], opacity }]}>
           {countdown > 0 ? (
             <>
               <Text style={styles.countdownText}>{countdown}</Text>
@@ -662,15 +662,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  countdownContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    width: '100%',
+  },
   countdownText: {
-    fontSize: Platform.OS === 'web' ? 150 : 120,
+    fontSize: Platform.OS === 'web' ? 180 : 140,
     color: COLORS.PRIMARY,
     fontWeight: 'bold',
     textShadowColor: COLORS.PRIMARY,
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 40,
+    textShadowRadius: 50,
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
+    lineHeight: Platform.OS === 'web' ? 200 : 160,
   },
   readyText: {
     fontSize: 48,
@@ -682,10 +689,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   readySubtext: {
-    fontSize: Platform.OS === 'web' ? 24 : 18,
+    fontSize: Platform.OS === 'web' ? 32 : 24,
     color: COLORS.TEXT_SECONDARY,
-    marginTop: 20,
+    marginTop: 10,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   backgroundLayer: {
     position: 'absolute',
