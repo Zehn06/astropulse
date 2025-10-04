@@ -663,13 +663,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   countdownText: {
-    fontSize: 120,
+    fontSize: Platform.OS === 'web' ? 150 : 120,
     color: COLORS.PRIMARY,
     fontWeight: 'bold',
     textShadowColor: COLORS.PRIMARY,
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 30,
+    textShadowRadius: 40,
     textAlign: 'center',
+    marginBottom: 20,
   },
   readyText: {
     fontSize: 48,
@@ -681,7 +682,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   readySubtext: {
-    fontSize: 18,
+    fontSize: Platform.OS === 'web' ? 24 : 18,
     color: COLORS.TEXT_SECONDARY,
     marginTop: 20,
     textAlign: 'center',
