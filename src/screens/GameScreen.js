@@ -325,17 +325,22 @@ const GameScreen = ({ onGameOver }) => {
   }, []);
   
   const handleFire = useCallback(() => {
-    if (!gameEngine.current || !isReady || isDead) return;
+    console.log('Space pressed - handleFire called');
+    if (!gameEngine.current || isDead) {
+      console.log('Fire blocked - gameEngine:', !!gameEngine.current, 'isDead:', isDead);
+      return;
+    }
     
     const success = gameEngine.current.handleFire(PLAYER.START_X, playerYRef.current);
+    console.log('Fire success:', success);
     if (success) {
       SoundManager.playShoot();
       HapticManager.tap();
     }
-  }, [isReady, isDead]);
+  }, [isDead]);
 
   const handleLeftFire = useCallback(() => {
-    if (!gameEngine.current || !isReady || isDead) return;
+    if (!gameEngine.current || isDead) return;
     
     // Sol taraftan ateş etmek için farklı pozisyon
     const leftFireX = PLAYER.START_X - 30; // Sol tarafa kaydır
@@ -344,7 +349,7 @@ const GameScreen = ({ onGameOver }) => {
       SoundManager.playShoot();
       HapticManager.tap();
     }
-  }, [isReady, isDead]);
+  }, [isDead]);
 
   const triggerShake = () => {
     Animated.sequence([
@@ -663,10 +668,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   countdownContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
     width: '100%',
+    height: '100%',
   },
   countdownText: {
     fontSize: Platform.OS === 'web' ? 180 : 140,
