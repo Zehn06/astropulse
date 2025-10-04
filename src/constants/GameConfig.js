@@ -26,6 +26,19 @@ export const PLAYER = {
   INITIAL_VELOCITY_Y: 0,
 };
 
+// Web responsive settings
+export const WEB_CONFIG = {
+  // Desktop için sabit boyutlar
+  DESKTOP_WIDTH: 500,
+  DESKTOP_HEIGHT: 800,
+  // Mobile için responsive
+  MOBILE_WIDTH: '100vw',
+  MOBILE_HEIGHT: '100vh',
+  // Web için özel ayarlar
+  WEB_PLAYER_START_X: 60, // Web'de daha küçük ekran için
+  WEB_PLAYER_SIZE: 40, // Web'de daha küçük player
+};
+
 export const SPAWN = {
   INITIAL_INTERVAL: 1.4, // seconds
   MIN_INTERVAL: 0.5, // minimum spawn interval

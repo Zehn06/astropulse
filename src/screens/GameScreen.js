@@ -9,8 +9,9 @@ import {
   Text,
   SafeAreaView,
   Easing,
+  Platform,
 } from 'react-native';
-import { PHYSICS, PLAYER, COLORS } from '../constants/GameConfig';
+import { PHYSICS, PLAYER, COLORS, WEB_CONFIG } from '../constants/GameConfig';
 import GameEngine from '../engine/GameEngine';
 import PlayerShip from '../components/PlayerShip';
 import Entity from '../components/Entity';
@@ -22,6 +23,11 @@ import PlayerData from '../utils/PlayerData';
 import { SHIPS } from '../data/Ships';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+// Web için responsive boyutlar
+const isWeb = Platform.OS === 'web';
+const WEB_SCREEN_WIDTH = isWeb ? WEB_CONFIG.DESKTOP_WIDTH : SCREEN_WIDTH;
+const WEB_SCREEN_HEIGHT = isWeb ? WEB_CONFIG.DESKTOP_HEIGHT : SCREEN_HEIGHT;
 
 const GameScreen = ({ onGameOver }) => {
   const [gameState, setGameState] = useState({
@@ -438,7 +444,15 @@ const GameScreen = ({ onGameOver }) => {
 
   return (
     <TouchableWithoutFeedback onPress={handleTap}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[
+        styles.container,
+        isWeb && {
+          width: WEB_SCREEN_WIDTH,
+          height: WEB_SCREEN_HEIGHT,
+          alignSelf: 'center',
+          margin: 'auto',
+        }
+      ]}>
         <Animated.View
           style={[
             styles.gameContainer,
