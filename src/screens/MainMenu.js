@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Animated, Platform } from 'react-native';
 import { COLORS } from '../constants/GameConfig';
 import Storage from '../utils/Storage';
 
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    fontSize: 56,
+    fontSize: Platform.OS === 'web' ? 72 : 56,
     fontWeight: 'bold',
     color: COLORS.PRIMARY,
     textShadowColor: COLORS.PRIMARY,

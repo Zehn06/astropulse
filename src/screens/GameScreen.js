@@ -26,8 +26,6 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 // Web için responsive boyutlar
 const isWeb = Platform.OS === 'web';
-const WEB_SCREEN_WIDTH = isWeb ? WEB_CONFIG.DESKTOP_WIDTH : SCREEN_WIDTH;
-const WEB_SCREEN_HEIGHT = isWeb ? WEB_CONFIG.DESKTOP_HEIGHT : SCREEN_HEIGHT;
 
 const GameScreen = ({ onGameOver }) => {
   const [gameState, setGameState] = useState({
@@ -51,6 +49,7 @@ const GameScreen = ({ onGameOver }) => {
   const [isDead, setIsDead] = useState(false);
   const [countdown, setCountdown] = useState(3);
   const [fireButton, setFireButton] = useState({ x: SCREEN_WIDTH - 80, y: SCREEN_HEIGHT - 100 });
+  const [leftFireButton, setLeftFireButton] = useState({ x: 20, y: SCREEN_HEIGHT - 100 });
   
   // Refs
   const gameEngine = useRef(null);
@@ -83,6 +82,10 @@ const GameScreen = ({ onGameOver }) => {
         if (e.code === 'Space') {
           e.preventDefault();
           handleFire();
+        }
+        if (e.code === 'KeyA' || e.code === 'ArrowLeft') {
+          e.preventDefault();
+          handleLeftFire();
         }
       };
       
@@ -330,6 +333,18 @@ const GameScreen = ({ onGameOver }) => {
     }
   }, [isReady, isDead]);
 
+  const handleLeftFire = useCallback(() => {
+    if (!gameEngine.current || !isReady || isDead) return;
+    
+    // Sol taraftan ateş etmek için farklı pozisyon
+    const leftFireX = PLAYER.START_X - 30; // Sol tarafa kaydır
+    const success = gameEngine.current.handleFire(leftFireX, playerYRef.current);
+    if (success) {
+      SoundManager.playShoot();
+      HapticManager.tap();
+    }
+  }, [isReady, isDead]);
+
   const triggerShake = () => {
     Animated.sequence([
       Animated.timing(shakeAnim, {
@@ -480,15 +495,7 @@ const GameScreen = ({ onGameOver }) => {
       onMouseDown={isWeb ? handleMouseDown : undefined}
       onMouseUp={isWeb ? handleMouseUp : undefined}
     >
-      <SafeAreaView style={[
-        styles.container,
-        isWeb && {
-          width: WEB_SCREEN_WIDTH,
-          height: WEB_SCREEN_HEIGHT,
-          alignSelf: 'center',
-          margin: 'auto',
-        }
-      ]}>
+      <SafeAreaView style={styles.container}>
         <Animated.View
           style={[
             styles.gameContainer,
@@ -616,10 +623,20 @@ const GameScreen = ({ onGameOver }) => {
             stageName={gameState.stageName}
           />
           
-          {/* Fire Button */}
+          {/* Right Fire Button */}
           <TouchableOpacity
             style={[styles.fireButton, { left: fireButton.x, top: fireButton.y }]}
             onPress={handleFire}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.fireButtonText}>🔫</Text>
+            <Text style={styles.ammoText}>{gameState.ammo || 0}</Text>
+          </TouchableOpacity>
+
+          {/* Left Fire Button */}
+          <TouchableOpacity
+            style={[styles.leftFireButton, { left: leftFireButton.x, top: leftFireButton.y }]}
+            onPress={handleLeftFire}
             activeOpacity={0.7}
           >
             <Text style={styles.fireButtonText}>🔫</Text>
@@ -708,6 +725,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: COLORS.PRIMARY,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+  },
+  leftFireButton: {
+    position: 'absolute',
+    width: 70,
+    height: 70,
+    backgroundColor: 'rgba(255, 0, 150, 0.3)',
+    borderRadius: 35,
+    borderWidth: 2,
+    borderColor: COLORS.SECONDARY,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: COLORS.SECONDARY,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
