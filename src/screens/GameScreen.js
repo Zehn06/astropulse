@@ -73,6 +73,29 @@ const GameScreen = ({ onGameOver }) => {
     console.log('GameScreen: Component mounted');
     initGame();
     
+    // Web için keyboard controls
+    if (isWeb) {
+      const handleKeyDown = (e) => {
+        if (e.code === 'Space' || e.code === 'ArrowUp') {
+          e.preventDefault();
+          handleTap();
+        }
+        if (e.code === 'Space') {
+          e.preventDefault();
+          handleFire();
+        }
+      };
+      
+      window.addEventListener('keydown', handleKeyDown);
+      
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        console.log('GameScreen: Component unmounting');
+        isMounted.current = false;
+        cleanup();
+      };
+    }
+    
     return () => {
       console.log('GameScreen: Component unmounting');
       isMounted.current = false;
@@ -287,6 +310,15 @@ const GameScreen = ({ onGameOver }) => {
       }, 100);
     }
   }, [isReady, isDead]);
+
+  // Web için mouse events
+  const handleMouseDown = useCallback(() => {
+    handleTap();
+  }, [handleTap]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsThrusting(false);
+  }, []);
   
   const handleFire = useCallback(() => {
     if (!gameEngine.current || !isReady || isDead) return;
@@ -443,7 +475,11 @@ const GameScreen = ({ onGameOver }) => {
   });
 
   return (
-    <TouchableWithoutFeedback onPress={handleTap}>
+    <TouchableWithoutFeedback 
+      onPress={handleTap}
+      onMouseDown={isWeb ? handleMouseDown : undefined}
+      onMouseUp={isWeb ? handleMouseUp : undefined}
+    >
       <SafeAreaView style={[
         styles.container,
         isWeb && {

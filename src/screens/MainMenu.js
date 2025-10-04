@@ -216,8 +216,11 @@ const styles = StyleSheet.create({
   bottomButtons: {
     position: 'absolute',
     bottom: 40,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
-    gap: 20,
+    justifyContent: 'space-around',
+    paddingHorizontal: 20,
   },
   iconButton: {
     width: 60,
