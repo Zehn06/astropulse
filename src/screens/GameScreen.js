@@ -75,17 +75,17 @@ const GameScreen = ({ onGameOver }) => {
     // Web için keyboard controls
     if (isWeb) {
       const handleKeyDown = (e) => {
-        if (e.code === 'Space' || e.code === 'ArrowUp') {
+        if (e.code === 'ArrowUp') {
           e.preventDefault();
-          handleTap();
+          handleTap(); // Uçuş
         }
         if (e.code === 'Space') {
           e.preventDefault();
-          handleFire();
+          handleFire(); // Ateş et
         }
         if (e.code === 'KeyA' || e.code === 'ArrowLeft') {
           e.preventDefault();
-          handleLeftFire();
+          handleLeftFire(); // Sol ateş
         }
       };
       
@@ -314,9 +314,10 @@ const GameScreen = ({ onGameOver }) => {
     }
   }, [isReady, isDead]);
 
+
   // Web için mouse events
   const handleMouseDown = useCallback(() => {
-    handleTap();
+    handleTap(); // Sol tık = uçuş
   }, [handleTap]);
 
   const handleMouseUp = useCallback(() => {
@@ -642,6 +643,7 @@ const GameScreen = ({ onGameOver }) => {
             <Text style={styles.fireButtonText}>🔫</Text>
             <Text style={styles.ammoText}>{gameState.ammo || 0}</Text>
           </TouchableOpacity>
+
         </Animated.View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
