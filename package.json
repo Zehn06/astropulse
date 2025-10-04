@@ -10,7 +10,7 @@
     "build": "expo export --platform web",
     "deploy": "npm run build && npx gh-pages -d dist"
   },
-  "homepage": "https://YOUR_USERNAME.github.io/astropulse",
+  "homepage": "https://zehn06.github.io/astropulse",
   "dependencies": {
     "@expo/cli": "^54.0.10",
     "@expo/metro-runtime": "~3.1.3",

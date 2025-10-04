@@ -128,4 +128,4 @@ If you encounter any issues or have questions:
 
 ---
 
-**🎮 Ready to play? [Click here!](https://YOUR_USERNAME.github.io/astropulse)**
+**🎮 Ready to play? [Click here!](https://Zehn06.github.io/astropulse)**
