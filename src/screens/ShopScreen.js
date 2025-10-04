@@ -182,7 +182,13 @@ const ShopScreen = ({ onBack }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Animated.View style={[styles.content, { opacity, transform: [{ translateY }] }]}>
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={true}
+        bounces={true}
+      >
+        <Animated.View style={[styles.content, { opacity, transform: [{ translateY }] }]}>
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={onBack}>
@@ -426,7 +432,8 @@ const ShopScreen = ({ onBack }) => {
             </View>
           )}
         </ScrollView>
-      </Animated.View>
+        </Animated.View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -435,6 +442,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.BACKGROUND,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
   content: {
     flex: 1,

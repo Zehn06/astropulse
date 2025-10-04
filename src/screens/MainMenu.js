@@ -86,22 +86,38 @@ const MainMenu = ({ onPlay, onShop, onMissions, onSettings, onLeaderboard, onDai
         </TouchableOpacity>
       </View>
 
-      {/* Bottom Buttons */}
-      <View style={styles.bottomButtons}>
-        <TouchableOpacity style={styles.iconButton} onPress={onShop}>
-          <Text style={styles.iconButtonText}>🛒</Text>
-          <Text style={styles.iconButtonLabel}>Shop</Text>
-        </TouchableOpacity>
+      {/* Bottom Buttons - 2 Rows */}
+      <View style={styles.bottomButtonsContainer}>
+        {/* Top Row */}
+        <View style={styles.topRowButtons}>
+          <TouchableOpacity style={styles.iconButton} onPress={onLeaderboard}>
+            <Text style={styles.iconButtonText}>🏆</Text>
+            <Text style={styles.iconButtonLabel}>Leaderboard</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.iconButton} onPress={onDailyReward}>
+            <Text style={styles.iconButtonText}>🎁</Text>
+            <Text style={styles.iconButtonLabel}>Daily Reward</Text>
+          </TouchableOpacity>
+        </View>
+        
+        {/* Bottom Row */}
+        <View style={styles.bottomRowButtons}>
+          <TouchableOpacity style={styles.iconButton} onPress={onShop}>
+            <Text style={styles.iconButtonText}>🛒</Text>
+            <Text style={styles.iconButtonLabel}>Shop</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={onMissions}>
-          <Text style={styles.iconButtonText}>🎯</Text>
-          <Text style={styles.iconButtonLabel}>Missions</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton} onPress={onMissions}>
+            <Text style={styles.iconButtonText}>🎯</Text>
+            <Text style={styles.iconButtonLabel}>Missions</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={onSettings}>
-          <Text style={styles.iconButtonText}>⚙️</Text>
-          <Text style={styles.iconButtonLabel}>Settings</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton} onPress={onSettings}>
+            <Text style={styles.iconButtonText}>⚙️</Text>
+            <Text style={styles.iconButtonLabel}>Settings</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Version */}
@@ -213,15 +229,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.TEXT_PRIMARY,
   },
-  bottomButtons: {
+  bottomButtonsContainer: {
     position: 'absolute',
-    bottom: 100,
+    bottom: 80,
     left: 0,
     right: 0,
+    paddingHorizontal: 30,
+  },
+  topRowButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingHorizontal: 20,
-    alignItems: 'center',
+    marginBottom: 20,
+  },
+  bottomRowButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   iconButton: {
     width: 40,
